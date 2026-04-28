@@ -1,0 +1,90 @@
+.background {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #000000 0%, #343572 100%);
+}
+
+.header {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.title {
+  font-size: 48px;
+  color: white;
+  font-family: "Nunito", sans-serif;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.subtitle {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
+}
+
+.desc {
+  font-size: 18px;
+  color: #cbd5f5;
+  margin: 10px;
+  font-family: "Nunito", sans-serif;
+}
+
+.glassBox {
+  width: 400px;
+  height: 300px;
+  border-radius: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.boxTitle {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-family: "Nunito", sans-serif;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+  margin-top: 20px;
+  font-family: "Nunito", sans-serif;
+  color: #343572;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
