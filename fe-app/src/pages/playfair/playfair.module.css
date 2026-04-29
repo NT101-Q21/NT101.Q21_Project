@@ -1,3 +1,7 @@
+body {
+  font-family: "Nunito", sans-serif;
+}
+
 .background {
   min-height: 100vh;
   display: flex;
@@ -12,90 +16,101 @@
   font-family: "Nunito", sans-serif;
   letter-spacing: 2px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.textarea {
+/* Section */
+.section {
   width: 90%;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  color: white;
+  font-size: 22px;
+  margin-bottom: 30px;
+  font-family: "Nunito", sans-serif;
+}
+
+/* Layout */
+.cover {
+  margin: 20px 0;
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.left,
+.middle,
+.right {
+  flex: 1;
+}
+
+/* Input */
+.input {
+  width: 100%;
   font-size: 18px;
   border-radius: 12px;
   border: none;
   outline: none;
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  backdrop-filter: blur(5px);
-  margin: 20px;
-  padding: 20px;
-  height: 200px;
-  font-family: "Nunito", sans-serif;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
+.textarea {
+  width: 100%;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 15px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.input::placeholder,
 .textarea::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.textarea:focus {
-  border: 1px solid #ffffff;
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.middle {
+/* Button */
+.button {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.left {
-  flex: 2;
-}
-
-.right {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.input {
-  width: 90%;
-  font-size: 18px;
+  padding: 15px;
   border-radius: 12px;
   border: none;
-  outline: none;
-  background: rgba(255, 255, 255, 0.2);
+  background: #585ba7;
   color: white;
-  backdrop-filter: blur(5px);
-  padding: 20px;
-  margin: 40px;
-  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-.input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+.button:hover {
+  background: #6c70d6;
 }
 
-.input:focus {
-  border: 1px solid #ffffff;
-  background: rgba(255, 255, 255, 0.25);
-}
-
+/* Dropdown */
 .dropdown {
   position: relative;
-  width: 90%;
-  font-family: "Nunito", sans-serif;
-  font-size: 18px;
+  width: 100%;
 }
 
 .selected {
-  padding: 10px;
+  padding: 15px;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border-radius: 10px;
   cursor: pointer;
-  padding: 20px;
-  font-size: 18px;
-  font-family: "Nunito", sans-serif;
 }
 
 .menu {
@@ -115,38 +130,4 @@
 
 .menu div:hover {
   background: #353470;
-}
-
-.button {
-  padding: 12px;
-  width: 40%;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.3s;
-  border: none;
-  margin-top: 20px;
-  font-family: "Nunito", sans-serif;
-  color: #343572;
-  font-weight: bold;
-}
-
-.button:hover {
-  background: #8081aa;
-  color: white;
-}
-
-.output {
-  width: 90%;
-  font-size: 18px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  backdrop-filter: blur(5px);
-  margin: 40px 20px 20px 20px;
-  padding: 20px;
-  height: 200px;
-  font-family: "Nunito", sans-serif;
 }

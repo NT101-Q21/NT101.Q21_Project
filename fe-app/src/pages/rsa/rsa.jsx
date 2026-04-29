@@ -1,5 +1,6 @@
 import { useState } from "react";
 import style from "./rsa.module.css";
+import BackButton from "../../components/BackButton";
 
 const RSA = () => {
   // Trạng thái cho Dropdown
@@ -89,6 +90,7 @@ const RSA = () => {
 
   return (
     <div className={style.background}>
+      <BackButton />
       <h1 className={style.title}>RSA Cipher</h1>
       
       {/* SECTION 1: GENERATE KEY */}
