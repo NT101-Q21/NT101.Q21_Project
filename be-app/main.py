@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import playfair, rsa
+# from routers import playfair, rsa
+from routers import rsa
 
 app = FastAPI(title="Cryptography API")
 
@@ -14,7 +15,7 @@ app.add_middleware(
 )
 
 # Nhúng các router
-app.include_router(playfair.router)
+# app.include_router(playfair.router)
 app.include_router(rsa.router)
 
 @app.get("/")
