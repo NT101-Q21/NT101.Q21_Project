@@ -1,7 +1,11 @@
 import { useState } from "react";
 import style from "./rsa.module.css";
 import BackButton from "../../components/BackButton";
-import { generateRSAKeys, encryptRSA, decryptRSA } from "../../services/rsaService";
+import {
+  generateRSAKeys,
+  encryptRSA,
+  decryptRSA,
+} from "../../services/rsaService";
 
 const RSA = () => {
   // Trạng thái cho Dropdown
@@ -16,7 +20,7 @@ const RSA = () => {
   const [n, setN] = useState("");
   const [eKey, setEKey] = useState("");
   const [dKey, setDKey] = useState("");
-  
+
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
 
@@ -41,44 +45,44 @@ const RSA = () => {
 
   // Hàm gọi API Mã hóa / Giải mã
   const handleSubmit = async () => {
-  if (!inputText || !n) {
-    alert("Vui lòng nhập văn bản và tạo Key!");
-    return;
-  }
-
-  try {
-    const isEncrypt = valueEnDe === "Encrypt";
-
-    let data;
-
-    if (isEncrypt) {
-      data = await encryptRSA({
-        text: inputText,
-        e: eKey,
-        n: n,
-        output_format: valueOutputFormat,
-      });
-    } else {
-      data = await decryptRSA({
-        text: inputText,
-        d: dKey,
-        n: n,
-        input_format: valueOutputFormat,
-      });
+    if (!inputText || !n) {
+      alert("Vui lòng nhập văn bản và tạo Key!");
+      return;
     }
 
-    setOutputText(data.result);
-  } catch (error) {
-    console.error(error);
-    alert("Lỗi khi gọi API!");
-  }
-};
+    try {
+      const isEncrypt = valueEnDe === "Encrypt";
+
+      let data;
+
+      if (isEncrypt) {
+        data = await encryptRSA({
+          text: inputText,
+          e: eKey,
+          n: n,
+          output_format: valueOutputFormat,
+        });
+      } else {
+        data = await decryptRSA({
+          text: inputText,
+          d: dKey,
+          n: n,
+          input_format: valueOutputFormat,
+        });
+      }
+
+      setOutputText(data.result);
+    } catch (error) {
+      console.error(error);
+      alert("Lỗi khi gọi API!");
+    }
+  };
 
   return (
     <div className={style.background}>
       <BackButton />
       <h1 className={style.title}>RSA Cipher</h1>
-      
+
       {/* SECTION 1: GENERATE KEY */}
       <div className={style.section}>
         <h2 className={style.sectionTitle}>1. Generate Key</h2>
@@ -113,13 +117,31 @@ const RSA = () => {
 
         <div className={style.cover}>
           <div className={style.left}>
-            <input type="number" placeholder="N" className={style.input} value={n} readOnly />
+            <input
+              type="number"
+              placeholder="N"
+              className={style.input}
+              value={n}
+              readOnly
+            />
           </div>
           <div className={style.middle}>
-            <input type="number" placeholder="E" className={style.input} value={eKey} readOnly />
+            <input
+              type="number"
+              placeholder="E"
+              className={style.input}
+              value={eKey}
+              readOnly
+            />
           </div>
           <div className={style.right}>
-            <input type="number" placeholder="D" className={style.input} value={dKey} readOnly />
+            <input
+              type="number"
+              placeholder="D"
+              className={style.input}
+              value={dKey}
+              readOnly
+            />
           </div>
         </div>
       </div>
@@ -127,7 +149,7 @@ const RSA = () => {
       {/* SECTION 2: ENCRYPT / DECRYPT */}
       <div className={style.section}>
         <h2 className={style.sectionTitle}>2. Encrypt/Decrypt</h2>
-        
+
         <div className={style.cover}>
           {/* Dropdown 1: Format */}
           <div className={style.left}>

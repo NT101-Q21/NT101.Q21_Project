@@ -1,7 +1,10 @@
 import { useState } from "react";
 import style from "./playfair.module.css";
 import BackButton from "../../components/BackButton";
-import { encryptPlayfair, decryptPlayfair } from "../../services/playfairService";
+import {
+  encryptPlayfair,
+  decryptPlayfair,
+} from "../../services/playfairService";
 
 const Playfair = () => {
   const [open, setOpen] = useState(false);
@@ -14,40 +17,40 @@ const Playfair = () => {
 
   // 2. Hàm xử lý gửi dữ liệu xuống Backend
   const handleSubmit = async () => {
-  if (!inputText || !keyInput) {
-    alert("Vui lòng nhập đầy đủ văn bản và khóa (key)!");
-    return;
-  }
-
-  try {
-    const isEncrypt = value === "Encrypt";
-
-    let data;
-
-    if (isEncrypt) {
-      data = await encryptPlayfair({
-        text: inputText,
-        key: keyInput,
-      });
-    } else {
-      data = await decryptPlayfair({
-        text: inputText,
-        key: keyInput,
-      });
+    if (!inputText || !keyInput) {
+      alert("Vui lòng nhập đầy đủ văn bản và khóa (key)!");
+      return;
     }
 
-    setOutputText(data.result);
-  } catch (error) {
-    console.error(error);
-    alert("Không thể kết nối Backend!");
-  }
-};
+    try {
+      const isEncrypt = value === "Encrypt";
+
+      let data;
+
+      if (isEncrypt) {
+        data = await encryptPlayfair({
+          text: inputText,
+          key: keyInput,
+        });
+      } else {
+        data = await decryptPlayfair({
+          text: inputText,
+          key: keyInput,
+        });
+      }
+
+      setOutputText(data.result);
+    } catch (error) {
+      console.error(error);
+      alert("Không thể kết nối Backend!");
+    }
+  };
 
   return (
     <div className={style.background}>
       <BackButton />
       <h1 className={style.title}>Playfair Cipher</h1>
-      
+
       {/* Input */}
       <div className={style.section}>
         <h2 className={style.sectionTitle}>1. Input</h2>
@@ -79,10 +82,7 @@ const Playfair = () => {
           <div className={style.right}>
             {/* Ô chọn Encrypt/Decrypt */}
             <div className={style.dropdown}>
-              <div
-                className={style.selected}
-                onClick={() => setOpen(!open)}
-              >
+              <div className={style.selected} onClick={() => setOpen(!open)}>
                 {value}
               </div>
 

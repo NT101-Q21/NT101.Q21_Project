@@ -10,7 +10,7 @@ const api = axios.create({
 });
 
 export const encryptPlayfair = async ({ text, key }) => {
-    console.log(BASE_URL);
+  console.log(BASE_URL);
   const response = await api.post("/encrypt", {
     text,
     key,
