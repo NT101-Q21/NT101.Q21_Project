@@ -1,6 +1,7 @@
 import { useState } from "react";
 import style from "./rsa.module.css";
 import BackButton from "../../components/BackButton";
+import { generateRSAKeys, encryptRSA, decryptRSA } from "../../services/rsaService";
 
 const RSA = () => {
   // Trạng thái cho Dropdown
@@ -25,68 +26,53 @@ const RSA = () => {
       alert("Vui lòng nhập số nguyên tố P và Q!");
       return;
     }
+
     try {
-      const response = await fetch("http://localhost:8000/api/rsa/generate-keys", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ p: parseInt(p), q: parseInt(q) })
-      });
-      
-      const data = await response.json();
-      // Tự động điền N, E, D vào ô input
+      const data = await generateRSAKeys(p, q);
+
       setN(data.n);
       setEKey(data.e);
       setDKey(data.d);
     } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Không thể kết nối đến Backend. Hãy chắc chắn Backend đang chạy ở cổng 8000!");
+      console.error(error);
+      alert("Không thể kết nối Backend!");
     }
   };
 
   // Hàm gọi API Mã hóa / Giải mã
   const handleSubmit = async () => {
-    if (!inputText || !n) {
-      alert("Vui lòng nhập văn bản và đảm bảo đã tạo Key (có N)!");
-      return;
-    }
+  if (!inputText || !n) {
+    alert("Vui lòng nhập văn bản và tạo Key!");
+    return;
+  }
 
-    try {
-      const isEncrypt = valueEnDe === "Encrypt";
-      const endpoint = isEncrypt ? "/encrypt" : "/decrypt";
-      
-      // Khớp chính xác với Pydantic Model bên Backend
-      const payload = isEncrypt 
-        ? { 
-            text: inputText, 
-            e: parseInt(eKey), 
-            n: parseInt(n), 
-            output_format: valueOutputFormat 
-          }
-        : { 
-            text: inputText, 
-            d: parseInt(dKey), 
-            n: parseInt(n), 
-            input_format: valueOutputFormat 
-          };
+  try {
+    const isEncrypt = valueEnDe === "Encrypt";
 
-      const response = await fetch(`http://localhost:8000/api/rsa${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+    let data;
+
+    if (isEncrypt) {
+      data = await encryptRSA({
+        text: inputText,
+        e: eKey,
+        n: n,
+        output_format: valueOutputFormat,
       });
-
-      const data = await response.json();
-      
-      if (response.ok) {
-        setOutputText(data.result);
-      } else {
-        alert("Lỗi từ Backend: " + data.detail);
-      }
-    } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Không thể kết nối đến Backend!");
+    } else {
+      data = await decryptRSA({
+        text: inputText,
+        d: dKey,
+        n: n,
+        input_format: valueOutputFormat,
+      });
     }
-  };
+
+    setOutputText(data.result);
+  } catch (error) {
+    console.error(error);
+    alert("Lỗi khi gọi API!");
+  }
+};
 
   return (
     <div className={style.background}>
