@@ -20,7 +20,7 @@ const Home = () => {
           <p className={style.desc}>Our members:</p>
           <p className={style.desc}>23521564 - Trần Lê Uyên Thy</p>
           <p className={style.desc}>23520797 - Lê Trung Kiên</p>
-          <p className={style.desc}>24521xxx - Nguyễn Quang Thế Anh</p>
+          <p className={style.desc}>24520115 - Nguyễn Quang Thế Anh</p>
         </div>
 
         <div className={style.right}>

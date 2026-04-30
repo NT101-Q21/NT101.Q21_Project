@@ -1,5 +1,6 @@
 import { useState } from "react";
 import style from "./playfair.module.css";
+import BackButton from "../../components/BackButton";
 
 const Playfair = () => {
   const [open, setOpen] = useState(false);
@@ -48,72 +49,96 @@ const Playfair = () => {
 
   return (
     <div className={style.background}>
+      <BackButton />
       <h1 className={style.title}>Playfair Cipher</h1>
       
-      {/* Ô nhập Text (Đã gắn state) */}
-      <textarea
-        type="text"
-        placeholder="Enter text to encrypt/decrypt"
-        className={style.textarea}
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-      />
-      
-      <div className={style.middle}>
-        <div className={style.left}>
-          {/* Ô nhập Key (Đã gắn state) */}
-          <input 
-            type="text" 
-            placeholder="Enter key" 
-            className={style.input} 
-            value={keyInput}
-            onChange={(e) => setKeyInput(e.target.value)}
-          />
-        </div>
-        
-        <div className={style.right}>
-          <div className={style.dropdown}>
-            <div className={style.selected} onClick={() => setOpen(!open)}>
-              {value}
-            </div>
+      {/* Input */}
+      <div className={style.section}>
+        <h2 className={style.sectionTitle}>1. Input</h2>
 
-            {open && (
-              <div className={style.menu}>
-                <div
-                  onClick={() => {
-                    setValue("Encrypt");
-                    setOpen(false);
-                  }}
-                >
-                  Encrypt
-                </div>
-                <div
-                  onClick={() => {
-                    setValue("Decrypt");
-                    setOpen(false);
-                  }}
-                >
-                  Decrypt
-                </div>
+        <div className={style.cover}>
+          <div className={style.left}>
+            {/* Ô nhập input text */}
+            <textarea
+              placeholder="Enter text to encrypt/decrypt"
+              className={style.textarea}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className={style.cover}>
+          <div className={style.left}>
+            {/* Ô nhập input key */}
+            <input
+              type="text"
+              placeholder="Enter key"
+              className={style.input}
+              value={keyInput}
+              onChange={(e) => setKeyInput(e.target.value)}
+            />
+          </div>
+
+          <div className={style.right}>
+            {/* Ô chọn Encrypt/Decrypt */}
+            <div className={style.dropdown}>
+              <div
+                className={style.selected}
+                onClick={() => setOpen(!open)}
+              >
+                {value}
               </div>
-            )}
+
+              {open && (
+                <div className={style.menu}>
+                  <div
+                    onClick={() => {
+                      setValue("Encrypt");
+                      setOpen(false);
+                    }}
+                  >
+                    Encrypt
+                  </div>
+                  <div
+                    onClick={() => {
+                      setValue("Decrypt");
+                      setOpen(false);
+                    }}
+                  >
+                    Decrypt
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className={style.cover}>
+          <div className={style.left}></div>
+          <div className={style.right}>
+            <button className={style.button} onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       </div>
-      
-      {/* Nút Submit (Đã gắn hàm handleSubmit) */}
-      <button className={style.button} onClick={handleSubmit}>
-        Submit
-      </button>
-      
-      {/* Ô hiển thị kết quả (Đã gắn state outputText) */}
-      <textarea
-        type="text"
-        placeholder="Result will be shown here"
-        className={style.output}
-        value={outputText}
-        readOnly
-      />
+
+      {/* Output*/}
+      <div className={style.section}>
+        <h2 className={style.sectionTitle}>2. Result</h2>
+
+        <div className={style.cover}>
+          <div className={style.left}>
+            <textarea
+              placeholder="Result will be shown here"
+              className={style.textarea}
+              value={outputText}
+              readOnly
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
