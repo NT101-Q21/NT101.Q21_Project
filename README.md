@@ -4,9 +4,11 @@
 # ĐỒ ÁN MÔN HỌC: AN TOÀN MẠNG MÁY TÍNH (NT101)
 ### ĐỀ TÀI: XÂY DỰNG ỨNG DỤNG MÔ PHỎNG THUẬT TOÁN MẬT MÃ (PLAYFAIR & RSA)
 
-## Thông tin nhóm thực hiện
-**Nhóm:** Nhóm 3
-**Giảng viên hướng dẫn:** Tô Nguyễn Nhật Quang
+## Thông tin môn học và nhóm thực hiện
+- **Môn học:** An toàn mạng máy tính
+- **Mã lớp:** NT101.Q21
+- **Giảng viên hướng dẫn:** Tô Nguyễn Nhật Quang
+- **Nhóm:** Nhóm 3
 
 | STT | Họ và Tên | MSSV | Vai trò chính |
 |-----|-----------|------|---------------|
