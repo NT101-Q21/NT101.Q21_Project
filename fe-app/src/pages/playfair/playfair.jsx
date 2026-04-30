@@ -1,6 +1,10 @@
 import { useState } from "react";
 import style from "./playfair.module.css";
 import BackButton from "../../components/BackButton";
+import {
+  encryptPlayfair,
+  decryptPlayfair,
+} from "../../services/playfairService";
 
 const Playfair = () => {
   const [open, setOpen] = useState(false);
@@ -13,37 +17,32 @@ const Playfair = () => {
 
   // 2. Hàm xử lý gửi dữ liệu xuống Backend
   const handleSubmit = async () => {
-    // Kiểm tra xem người dùng đã nhập đủ chưa
     if (!inputText || !keyInput) {
       alert("Vui lòng nhập đầy đủ văn bản và khóa (key)!");
       return;
     }
 
     try {
-      // Dựa vào Dropdown để quyết định gọi API mã hóa hay giải mã
-      const endpoint = value === "Encrypt" ? "/encrypt" : "/decrypt";
-      
-      const response = await fetch(`http://localhost:8000/api/playfair${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // Gửi dữ liệu theo đúng chuẩn Pydantic Model bên Backend
-        body: JSON.stringify({ 
-          text: inputText, 
-          key: keyInput 
-        })
-      });
+      const isEncrypt = value === "Encrypt";
 
-      const data = await response.json();
-      
-      if (response.ok) {
-        // In kết quả ra ô output
-        setOutputText(data.result);
+      let data;
+
+      if (isEncrypt) {
+        data = await encryptPlayfair({
+          text: inputText,
+          key: keyInput,
+        });
       } else {
-        alert("Lỗi từ Backend: " + data.detail);
+        data = await decryptPlayfair({
+          text: inputText,
+          key: keyInput,
+        });
       }
+
+      setOutputText(data.result);
     } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Không thể kết nối đến Backend. Đảm bảo Backend đang chạy!");
+      console.error(error);
+      alert("Không thể kết nối Backend!");
     }
   };
 
@@ -51,7 +50,7 @@ const Playfair = () => {
     <div className={style.background}>
       <BackButton />
       <h1 className={style.title}>Playfair Cipher</h1>
-      
+
       {/* Input */}
       <div className={style.section}>
         <h2 className={style.sectionTitle}>1. Input</h2>
@@ -83,10 +82,7 @@ const Playfair = () => {
           <div className={style.right}>
             {/* Ô chọn Encrypt/Decrypt */}
             <div className={style.dropdown}>
-              <div
-                className={style.selected}
-                onClick={() => setOpen(!open)}
-              >
+              <div className={style.selected} onClick={() => setOpen(!open)}>
                 {value}
               </div>
 

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import style from "./rsa.module.css";
 import BackButton from "../../components/BackButton";
+import {
+  generateRSAKeys,
+  encryptRSA,
+  decryptRSA,
+} from "../../services/rsaService";
 
 const RSA = () => {
   // Trạng thái cho Dropdown
@@ -15,7 +20,7 @@ const RSA = () => {
   const [n, setN] = useState("");
   const [eKey, setEKey] = useState("");
   const [dKey, setDKey] = useState("");
-  
+
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
 
@@ -25,66 +30,51 @@ const RSA = () => {
       alert("Vui lòng nhập số nguyên tố P và Q!");
       return;
     }
+
     try {
-      const response = await fetch("http://localhost:8000/api/rsa/generate-keys", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ p: parseInt(p), q: parseInt(q) })
-      });
-      
-      const data = await response.json();
-      // Tự động điền N, E, D vào ô input
+      const data = await generateRSAKeys(p, q);
+
       setN(data.n);
       setEKey(data.e);
       setDKey(data.d);
     } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Không thể kết nối đến Backend. Hãy chắc chắn Backend đang chạy ở cổng 8000!");
+      console.error(error);
+      alert("Không thể kết nối Backend!");
     }
   };
 
   // Hàm gọi API Mã hóa / Giải mã
   const handleSubmit = async () => {
     if (!inputText || !n) {
-      alert("Vui lòng nhập văn bản và đảm bảo đã tạo Key (có N)!");
+      alert("Vui lòng nhập văn bản và tạo Key!");
       return;
     }
 
     try {
       const isEncrypt = valueEnDe === "Encrypt";
-      const endpoint = isEncrypt ? "/encrypt" : "/decrypt";
-      
-      // Khớp chính xác với Pydantic Model bên Backend
-      const payload = isEncrypt 
-        ? { 
-            text: inputText, 
-            e: parseInt(eKey), 
-            n: parseInt(n), 
-            output_format: valueOutputFormat 
-          }
-        : { 
-            text: inputText, 
-            d: parseInt(dKey), 
-            n: parseInt(n), 
-            input_format: valueOutputFormat 
-          };
 
-      const response = await fetch(`http://localhost:8000/api/rsa${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+      let data;
 
-      const data = await response.json();
-      
-      if (response.ok) {
-        setOutputText(data.result);
+      if (isEncrypt) {
+        data = await encryptRSA({
+          text: inputText,
+          e: eKey,
+          n: n,
+          output_format: valueOutputFormat,
+        });
       } else {
-        alert("Lỗi từ Backend: " + data.detail);
+        data = await decryptRSA({
+          text: inputText,
+          d: dKey,
+          n: n,
+          input_format: valueOutputFormat,
+        });
       }
+
+      setOutputText(data.result);
     } catch (error) {
-      console.error("Lỗi:", error);
-      alert("Không thể kết nối đến Backend!");
+      console.error(error);
+      alert("Lỗi khi gọi API!");
     }
   };
 
@@ -92,7 +82,7 @@ const RSA = () => {
     <div className={style.background}>
       <BackButton />
       <h1 className={style.title}>RSA Cipher</h1>
-      
+
       {/* SECTION 1: GENERATE KEY */}
       <div className={style.section}>
         <h2 className={style.sectionTitle}>1. Generate Key</h2>
@@ -127,13 +117,31 @@ const RSA = () => {
 
         <div className={style.cover}>
           <div className={style.left}>
-            <input type="number" placeholder="N" className={style.input} value={n} readOnly />
+            <input
+              type="number"
+              placeholder="N"
+              className={style.input}
+              value={n}
+              readOnly
+            />
           </div>
           <div className={style.middle}>
-            <input type="number" placeholder="E" className={style.input} value={eKey} readOnly />
+            <input
+              type="number"
+              placeholder="E"
+              className={style.input}
+              value={eKey}
+              readOnly
+            />
           </div>
           <div className={style.right}>
-            <input type="number" placeholder="D" className={style.input} value={dKey} readOnly />
+            <input
+              type="number"
+              placeholder="D"
+              className={style.input}
+              value={dKey}
+              readOnly
+            />
           </div>
         </div>
       </div>
@@ -141,7 +149,7 @@ const RSA = () => {
       {/* SECTION 2: ENCRYPT / DECRYPT */}
       <div className={style.section}>
         <h2 className={style.sectionTitle}>2. Encrypt/Decrypt</h2>
-        
+
         <div className={style.cover}>
           {/* Dropdown 1: Format */}
           <div className={style.left}>
