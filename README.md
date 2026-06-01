@@ -7,7 +7,7 @@
 ## Thông tin môn học và nhóm thực hiện
 - **Môn học:** An toàn mạng máy tính
 - **Mã lớp:** NT101.Q21
-- **Giảng viên hướng dẫn:** Tô Nguyễn Nhật Quang
+- **Giảng viên hướng dẫn:** Ths.Tô Nguyễn Nhật Quang
 - **Nhóm:** Nhóm 3
 
 | STT | Họ và Tên | MSSV | Vai trò chính |
